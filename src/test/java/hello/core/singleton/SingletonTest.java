@@ -2,6 +2,7 @@ package hello.core.singleton;
 
 import hello.core.AppConfig;
 import hello.core.member.MemberService;
+import org.assertj.core.api.Assert;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -25,5 +26,16 @@ public class SingletonTest {
         //메모리 낭비가 심하다. (특히, memberService 생성하면,
         // memberRepository, 구현체 등도 생성)
         //객체 생성하고 공유할 수 있도록 하자
+    }
+
+    @Test
+    @DisplayName("싱글톤 패턴 적용한 객체 사용")
+    void singletonServiceTest(){
+        SingletonService singletonService1 = SingletonService.getInstance();
+        SingletonService singletonService2 = SingletonService.getInstance();
+
+        // Assertions.assertThat(singletonService1).isEqualTo(singletonService2);
+        // sameas가 == 의 느낌으로, 아예 참조값을 비교하는 메소드
+        Assertions.assertThat(singletonService1).isSameAs(singletonService2);
     }
 }
