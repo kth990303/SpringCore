@@ -14,14 +14,11 @@ public class StatefulServiceTest {
         StatefulService s1 = ac.getBean(StatefulService.class);
         StatefulService s2 = ac.getBean(StatefulService.class);
 
-        s1.order("userA", 10000);
-        s2.order("userB", 20000);
-
-        int price = s1.getPrice();
-        // 20000원이 나온다.
-        System.out.println("price= "+price);
-
-        Assertions.assertThat(s1.getPrice()).isEqualTo(s2.getPrice());
+        int price1 = s1.order("userA", 10000);
+        int price2 = s2.order("userB", 20000);
+        // 지역변수는 공유되는게 아니니까
+        // 싱글톤 방식으로 할 경우, 클래스 변수 및 공유값은 건드리지 않도록
+        Assertions.assertThat(price1).isNotEqualTo(price2);
     }
     static class TestConfig{
         @Bean
